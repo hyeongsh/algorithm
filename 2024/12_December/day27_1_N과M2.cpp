@@ -21,7 +21,7 @@ int main(void) {
 
 void permutation(int n, int m, int cur, std::vector<int> &vec) {
 	if (cur > m) {
-		for (int i = 1; i < vec.size(); i++) {
+		for (size_t i = 1; i < vec.size(); i++) {
 			std::cout << vec[i];
 			if (i == vec.size() - 1) {
 				std::cout << "\n";
