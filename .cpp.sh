@@ -21,16 +21,14 @@ if [ $# -eq 2 ]; then
 	fi
 	echo "컴파일 중: $SRC -> $OUT"
 	$CXX $CXXFLAGS $SRC -o $OUT
+	if [ -z "$OUT" ]; then
+		echo "No excute file : $OUT"
+		exit 1
+	fi
+	echo "Excute : $OUT"
+	./$OUT
 else
 	case $1 in
-		"run")
-			if [ ! -f "$OUT" ]; then
-				echo "실행 파일이 없습니다: $OUT"
-				exit 1
-			fi
-			echo "실행 중: $OUT"
-			./$OUT
-			;;
 		"clean")
 			echo "파일 삭제 중: $OUT"
 			rm -f $OUT
