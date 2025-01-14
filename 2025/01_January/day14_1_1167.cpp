@@ -53,7 +53,6 @@ void bfs(int n, std::vector<std::vector<std::pair<int, int>>> &vec, int start, s
 		int cur = que.front().first;
 		int curCost = que.front().second;
 		que.pop();
-		int len = vec[cur].size();
 		for (const auto &curPath : vec[cur]) {
 			int next = curPath.first;
 			int nextCost = curPath.second;
