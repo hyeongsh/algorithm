@@ -11,7 +11,7 @@
 int main(void) {
 	int n;
 	std::cin >> n;
-	std::vector<std::vector<int>> vec(n);
+	std::vector<std::vector<long long>> vec(n);
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j <= i; j++) {
 			int x;
@@ -24,11 +24,11 @@ int main(void) {
 			vec[i][j] += std::max(vec[i + 1][j], vec[i + 1][j + 1]);
 		}
 	}
-	for (int i = 0; i < n; i++) {
-		for (int j = 0; j <= i; j++) {
-			std::cout << vec[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
+	// for (int i = 0; i < n; i++) {
+	// 	for (int j = 0; j <= i; j++) {
+	// 		std::cout << vec[i][j] << " ";
+	// 	}
+	// 	std::cout << std::endl;
+	// }
 	std::cout << vec[0][0] << std::endl;
 }
