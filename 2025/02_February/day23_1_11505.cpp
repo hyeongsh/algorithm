@@ -18,9 +18,9 @@ N, M, K 가 주어지고 N개의 수가 M번 변경되고 K번 계산해야 한�
 int arr[1000001];
 long long segTree[4000001];
 
-int init(int st, int en, int curNode);
-int update(int st, int en, int curNode, int index, int change);
-int calculate(int st, int en, int curNode, int b, int c);
+long long init(int st, int en, int curNode);
+long long update(int st, int en, int curNode, int index, int change);
+long long calculate(int st, int en, int curNode, int b, int c);
 
 int main(void) {
 	std::ios::sync_with_stdio(false);
@@ -37,9 +37,6 @@ int main(void) {
 		std::cin >> a >> b >> c;
 		if (a == 1) {
 			update(1, n, 1, b, c);
-			// for (int i = 1; i <= 4 * n; i++) {
-			// 	std::cout << i << ": " << segTree[i] << std::endl;
-			// }
 		} else {
 			std::cout << calculate(1, n, 1, b, c) << std::endl;
 		}
@@ -47,36 +44,34 @@ int main(void) {
 	return 0;
 }
 
-int init(int st, int en, int curNode) {
+long long init(int st, int en, int curNode) {
 	if (st == en) {
 		segTree[curNode] = arr[st];
 		return segTree[curNode];
 	}
-	segTree[curNode] 
-		= init(st, st + (en - st) / 2, curNode * 2)
-		* init(st + 1 + (en - st) / 2, en, curNode * 2 + 1);
-	segTree[curNode] %= MOD_NUM;
+	segTree[curNode] = (init(st, st + (en - st) / 2, curNode * 2)
+		* init(st + 1 + (en - st) / 2, en, curNode * 2 + 1)) % MOD_NUM;
 	return segTree[curNode];
 }
 
-int update(int st, int en, int curNode, int index, int change) {
-	if (st == en) {
+long long update(int st, int en, int curNode, int index, int change) {
+	if (index < st || index > en) {
+		return segTree[curNode];
+	} else if (st == en) {
 		segTree[curNode] = change;
 		return segTree[curNode];
-	} else if (index >= st && index <= en) {
-		segTree[curNode]
-			= update(st, st + (en - st) / 2, curNode * 2, index, change)
-			* update(st + 1 + (en - st) / 2, en, curNode * 2 + 1, index, change);
-		return segTree[curNode];
 	} else {
+		segTree[curNode]
+			= (update(st, st + (en - st) / 2, curNode * 2, index, change)
+			* update(st + 1 + (en - st) / 2, en, curNode * 2 + 1, index, change)) % MOD_NUM;
 		return segTree[curNode];
 	}
 }
 
-int calculate(int st, int en, int curNode, int b, int c) {
-	if (st <= b && en >= c) {
+long long calculate(int st, int en, int curNode, int b, int c) {
+	if (b <= st && c >= en) {
 		return segTree[curNode];
-	} else if (st >= c || en <= b) {
+	} else if (st > c || en < b) {
 		return 1;
 	} else {
 		return (calculate(st, st + (en - st) / 2, curNode * 2, b, c)
