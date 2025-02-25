@@ -33,8 +33,8 @@ int main(void) {
 		std::cin >> arr[i];
 	}
 	init(1, n, 1);
-	// for (int i = 1; i < 4 * n; i++) {
-	// 	std::cout << i << ": " << segTree[i] << std::endl;
+	// for (int i = 1; i <= n; i++) {
+	// 	std::cout << i << ": " << arr[i] << std::endl;
 	// }
 	for (int i = 0; i < m + k; i++) {
 		int a;
@@ -43,6 +43,9 @@ int main(void) {
 			long long b, c, d;
 			std::cin >> b >> c >> d;
 			update(1, n, 1, b, c, d);
+			// for (int i = 1; i <= n; i++) {
+			// 	std::cout << i << ": " << arr[i] << std::endl;
+			// }
 		} else {
 			long long b, c;
 			std::cin >> b >> c;
@@ -55,10 +58,12 @@ int main(void) {
 long long init(int st, int en, int curNode) {
 	if (st == en) {
 		segTree[curNode] = arr[st];
+		lazy[curNode] = 0;
 		return segTree[curNode];
 	}
 	int mid = (st + en) / 2;
 	segTree[curNode] = init(st, mid, curNode * 2) + init(mid + 1, en, curNode * 2 + 1);
+	lazy[curNode] = 0;
 	return segTree[curNode];
 }
 
@@ -67,8 +72,10 @@ long long update(int st, int en, int curNode, int b, int c, long long value) {
 	if (b <= st && c >= en) {
 		segTree[curNode] += (en - st + 1) * value;
 		if (st != en) {
-			lazy[curNode * 2] = value;
-			lazy[curNode * 2 + 1] = value;
+			lazy[curNode * 2] += value;
+			lazy[curNode * 2 + 1] += value;
+		} else {
+			arr[st] = segTree[curNode];
 		}
 		return segTree[curNode];
 	} else if (st > c || en < b) {
@@ -97,8 +104,10 @@ void push(int st, int en, int curNode) {
 	if (lazy[curNode] != 0) {
 		segTree[curNode] += (en - st + 1) * lazy[curNode];
 		if (st != en) {
-			lazy[curNode * 2] = lazy[curNode];
-			lazy[curNode * 2 + 1] = lazy[curNode];
+			lazy[curNode * 2] += lazy[curNode];
+			lazy[curNode * 2 + 1] += lazy[curNode];
+		} else {
+			arr[st] = segTree[curNode];
 		}
 		lazy[curNode] = 0;
 	}
