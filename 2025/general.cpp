@@ -15,7 +15,7 @@
 // max값 설정
 #define MAX 
 
-// input 변수 선언
+// 전역 변수 선언
 
 // 기본 함수
 void init();
