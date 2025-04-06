@@ -15,12 +15,11 @@ X와 K가 주어졌을 때 X + Y = X | Y 를 만족하는 K번째로 작은 자�
 
 #define FASTIO std::cin.tie(NULL); std::cout.tie(NULL); std::ios::sync_with_stdio(false);
 // max값 설정
-#define MAX 32
+#define MAX
 
 // 전역 변수 선언
-int X, K;
-int xBit[MAX];
-int kBit[MAX];
+long long X, K;
+long long Y;
 
 // 기본 함수
 void init();
@@ -46,58 +45,13 @@ void input() {
 }
 
 void setting() {
-	long long cur = 1;
-	int count = 0;
-	long long x = X;
-	while (x) {
-		while (cur * 2 <= x) {
-			cur *= 2;
-			count++;
-		}
-		xBit[MAX - 1 - count] = 1;
-		x -= cur;
-		cur = 1;
-		count = 0;
+	for (int i = 0, idx = 0; i < 65; i++) {
+		if ((X >> i) & 1LL) continue ;
+		if ((K >> idx) & 1LL) Y |= (1LL << i);
+		idx++;
 	}
-
-	cur = 1;
-	count = 0;
-	long long k = K;
-	while (k) {
-		while (cur * 2 <= k) {
-			cur *= 2;
-			count++;
-		}
-		kBit[MAX - 1 - count] = 1;
-		k -= cur;
-		cur = 1;
-		count = 0;
-	}
-	
 }
 
 void findAnswer() {
-	std::vector<int> ans(64, 0);
-	int x = MAX - 1, k = MAX - 1, a = 63;
-	for (; x > 0 || k > 0;) {
-		if (xBit[x] == 1) {
-			ans[a--] = 0;
-			if (x != 0) x--;
-		} else if (kBit[k] == 1) {
-			ans[a--] = 1;
-			if (x != 0) x--;
-			k--;
-		} else {
-			ans[a--] = 0;
-			if (x != 0) x--;
-			k--;
-		}
-	}
-	long long res = 0;
-	for (int i = 0; i < 64; i++) {
-		if (ans[i]) {
-			res += (long long)std::pow(2, (63 - i));
-		}
-	}
-	std::cout << res << std::endl;
+	std::cout << Y << std::endl;
 }
