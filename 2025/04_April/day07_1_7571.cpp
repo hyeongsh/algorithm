@@ -11,8 +11,7 @@ N 크기의 지도에 M 개의 점들이 있을때, 이걸 한 곳으로 모으�
 // 라이브러리 설정
 #include <iostream>
 #include <vector>
-#include <cstdlib>
-#include <numeric>
+#include <algorithm>
 
 #define FASTIO std::cin.tie(NULL); std::cout.tie(NULL); std::ios::sync_with_stdio(false);
 // max값 설정
@@ -20,10 +19,8 @@ N 크기의 지도에 M 개의 점들이 있을때, 이걸 한 곳으로 모으�
 
 // 전역 변수 선언
 int N, M;
-std::pair<int, int> average;
-std::vector<std::pair<int, int>> vec;
-int da[4] = {1, -1, 0, 0};
-int db[4] = {0, 0, 1, -1};
+std::vector<int> vecA;
+std::vector<int> vecB;
 
 // 기본 함수
 void init();
@@ -48,50 +45,23 @@ void init() {
 
 void input() {
 	std::cin >> N >> M;
-	int a, b;
 	for (int i = 0; i < M; i++) {
+		int a, b;
 		std::cin >> a >> b;
-		vec.push_back({a, b});
+		vecA.push_back(a);
+		vecB.push_back(b);
 	}
 }
 
 void setting() {
-	average = std::accumulate(vec.begin(), vec.end(), std::make_pair(0, 0), 
-		[](const std::pair<int, int> &a, const std::pair<int, int> &b) {
-			return std::make_pair(a.first + b.first, a.second + b.second);
-		}
-	);
-	average.first /= M;
-	average.second /= M;
+	std::sort(vecA.begin(), vecA.end());
+	std::sort(vecB.begin(), vecB.end());
 }
 
 void findAnswer() {
-	int curA = average.first;
-	int curB = average.second;
-	long long minDist;
-	while (true) {
-		long long dist = calDist(curA, curB);
-		minDist = dist;
-		int minA = curA;
-		int minB = curB;
-		for (int i = 0; i < 4; i++) {
-			int nextA = curA + da[i];
-			int nextB = curB + db[i];
-			long long nextDist = calDist(nextA, nextB);
-			if (nextDist < dist) {
-				minDist = nextDist;
-				minA = nextA;
-				minB = nextB;
-			}
-		}
-		if (minDist == dist) {
-			break ;
-		} else {
-			curA = minA;
-			curB = minB;
-		}
-	}
-	std::cout << minDist << std::endl;
+	int a = vecA[M / 2];
+	int b = vecB[M / 2];
+	std::cout << calDist(a, b) << std::endl;
 }
 
 long long calDist(int a, int b) {
@@ -100,7 +70,7 @@ long long calDist(int a, int b) {
 		return 1e9;
 	}
 	for (int i = 0; i < M; i++) {
-		dist += std::abs(a - vec[i].first) + std::abs(b - vec[i].second);
+		dist += std::abs(a - vecA[i]) + std::abs(b - vecB[i]);
 	}
 	return dist;
 }
