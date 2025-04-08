@@ -13,18 +13,18 @@
 // 라이브러리 설정
 #include <iostream>
 #include <vector>
-#include <map>
+#include <unordered_map>
 
 #define FASTIO std::cin.tie(NULL); std::cout.tie(NULL); std::ios::sync_with_stdio(false);
 // max값 설정
 
 // 전역 변수 선언
-int N, M, K;
+int N, M, K, cnt;
 std::string tiles[11];
-std::string res[1001];
-std::map<std::string, int> myMap;
+std::unordered_map<std::string, int> myMap;
 int da[8] = {1, -1, 0, 0, 1, -1, 1, -1};
 int db[8] = {0, 0, 1, -1, 1, -1, -1, 1};
+std::string res;
 
 // 기본 함수
 void init();
@@ -52,47 +52,46 @@ void input() {
 	for (int i = 0; i < N; i++) {
 		std::cin >> tiles[i];
 	}
-	for (int i = 0; i < K; i++) {
-		std::cin >> res[i];
-	}
 }
 
 void setting() {
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < M; j++) {
-			std::string str;
-			str.push_back(tiles[i][j]);
-			checkStr(i, j, str, 0);
-		}
-	}
+	
 }
 
 void findAnswer() {
 	for (int i = 0; i < K; i++) {
-		std::cout << myMap.find(res[i])->second << std::endl;
+		std::cin >> res;
+		cnt = 0;
+		if (myMap.find(res) == myMap.end()) {
+			for (int i = 0; i < N; i++) {
+				for (int j = 0; j < M; j++) {
+					std::string str;
+					str.push_back(tiles[i][j]);
+					if (tiles[i][j] != res[0]) continue ;
+					checkStr(i, j, str, 0);
+				}
+			}
+			myMap[res] = cnt;
+		}
+		std::cout << myMap[res] << "\n";
 	}
 }
 
-void checkStr(int a, int b, std::string curStr, int cur) {
-	if (cur == 5) {
+void checkStr(int a, int b, std::string curStr, int dep) {
+	if (dep == res.size() - 1) {
+		cnt += 1;
 		return ;
-	}
-	if (myMap.find(curStr) == myMap.end()) {
-		myMap.insert({curStr, 1});	
-	} else {
-		myMap.find(curStr)->second += 1;
 	}
 	for (int i = 0; i < 8; i++) {
 		std::string nextStr = curStr;
 		int nextA = a + da[i];
 		int nextB = b + db[i];
-		if (nextA < 0 || nextA >= N) {
-			nextA = (nextA + N) % N;
-		}
-		if (nextB < 0 || nextB >= M) {
-			nextB = (nextB + M) % M;
-		}
+		if (nextA < 0) nextA = N - 1;
+		if (nextB < 0) nextB = M - 1;
+		if (nextA >= N) nextA = 0;
+		if (nextB >= M) nextB = 0;
+		if (tiles[nextA][nextB] != res[dep + 1]) continue ;
 		nextStr.push_back(tiles[nextA][nextB]);
-		checkStr(nextA, nextB, nextStr, cur + 1);
+		checkStr(nextA, nextB, nextStr, dep + 1);
 	}
 }
