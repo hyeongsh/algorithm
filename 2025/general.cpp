@@ -18,30 +18,18 @@
 // 전역 변수 선언
 
 // 기본 함수
-void init();
 void input();
-void setting();
 void findAnswer();
 
 // main 함수
 int main(void) {
 	FASTIO
-	init();
 	input();
-	setting();
 	findAnswer();
-}
-
-void init() {
-	
 }
 
 void input() {
 	
-}
-
-void setting() {
-
 }
 
 void findAnswer() {
