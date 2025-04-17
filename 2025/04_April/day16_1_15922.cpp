@@ -36,10 +36,23 @@ void input() {
 	for (int i = 0; i < N; i++) {
 		int a, b;
 		std::cin >> a >> b;
-		
-	}	
+		lines[i] = {a, b};
+	}
 }
 
 void findAnswer() {
-
+	int left = lines[0].first;
+	int right = lines[0].second;
+	int sum = 0;
+	for (int i = 1; i < N; i++) {
+		if (right >= lines[i].first) {
+			right = std::max(right, lines[i].second);
+		} else {
+			sum += right - left;
+			left = lines[i].first;
+			right = lines[i].second;
+		}
+	}
+	sum += right - left;
+	std::cout << sum << std::endl;
 }
