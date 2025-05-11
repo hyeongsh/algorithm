@@ -10,7 +10,7 @@ import java.io.OutputStreamWriter;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-public class Main {
+public class day11_17394 {
     static class Pair {
         Integer num;
         Integer time;
