@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-public class Main {
+public class day12_5913 {
 	private static class Pair {
 		public int a;
 		public int b;
