@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
-public class Main {
+public class day27_2583 {
 	static int m, n, k;
 	static int[][] board;
 	static int[][] vis;
