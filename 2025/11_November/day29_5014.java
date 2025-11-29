@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 import java.util.Queue;
 import java.util.LinkedList;
 
-public class Main {
+public class day29_5014 {
 	static int F, S, G, U, D;
 	static int[] vis;
     public static void main(String[] args) throws IOException {
