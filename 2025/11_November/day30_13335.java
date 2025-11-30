@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-public class Main {
+public class day30_13335 {
 	static int n, w, l;
 	static int[][] trucks;
     public static void main(String[] args) throws IOException {
