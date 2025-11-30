@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
 
-public class Main {
+public class day30_2193 {
 	static long[] arr = new long[91];
 
     public static void main(String[] args) throws IOException {
