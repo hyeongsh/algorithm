@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Stack;
 
-public class Main {
+public class day02_2493 {
 
 	static class Pair {
 		int high;
