@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.StringTokenizer;
 import java.util.Arrays;
 
-public class Main {
+public class day05_16401 {
 	static int M, N;
 	static int[] sticks;
 
